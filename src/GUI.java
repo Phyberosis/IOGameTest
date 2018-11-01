@@ -10,6 +10,8 @@ public class GUI extends JFrame{
         JFrame frame = new JFrame();
         Game g = new Game();
 
+        //hello simon
+
         frame.add(g);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.addKeyListener(g);
