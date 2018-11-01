@@ -5,47 +5,31 @@ import java.io.File;
 import java.io.IOException;
 
 public abstract class MyEnt {
-    private int x, y;
+    int x, y;
 
-    private int raduis = 7;
-    private int eraseRad = 50;
+    int radius;
 
-    private long moveDelay = 15;
-    private long lastMove = System.currentTimeMillis();
+    long actionDelay = 15;
+    long lastActionTime = System.currentTimeMillis();
 
-    public boolean draw = false, erase = false;
+    String imageSrc;
 
-    String imageSrc = "C:\\Users\\phybe\\Desktop\\api.PNG";
-
-    private int moveOne(int a, int target){
-        lastMove = System.currentTimeMillis();
-        return a + ((target - a) / 10);
+    public MyEnt(int radius, String imgSrc){
+        this.radius = radius;
+        imageSrc = imgSrc;
     }
 
-    void move(Location loc){
-        if(System.currentTimeMillis() - lastMove > moveDelay) {
-            lastMove = System.currentTimeMillis();
-            x = moveOne(x, loc.x);
-            y = moveOne(y, loc.y);
-        }
+    public boolean inBounds(int x, int y, int r){
+        return sqr(this.x - x) + sqr(this.y - y) < sqr(r+radius);
     }
 
     void drawPicture(Graphics g, BufferedImage img){
-        g.drawImage(img, x, y, null);
+        g.drawImage(img, (int)(x-radius), (int)(y-radius), null);
     }
 
     void drawCircle(Graphics g){
         g.setColor(Color.blue);
-        if(erase){
-            g.setColor(Color.white);
-            g.fillOval(x - eraseRad, y-eraseRad, eraseRad, eraseRad);
-        }else{
-            g.fillOval(x, y , raduis, raduis);
-        }
-    }
-
-    void clear(Graphics g){
-        g.setColor(Color.blue);
+        g.fillOval(x, y , radius, radius);
     }
 
     BufferedImage loadImage(){
@@ -58,5 +42,28 @@ public abstract class MyEnt {
         }
 
         return null;
+    }
+
+    Image scale(Image i, int r){
+        return i.getScaledInstance(r, r, Image.SCALE_DEFAULT);
+    }
+
+    BufferedImage toBufImage(Image img){
+        BufferedImage retImg;
+        img = scale(img, radius*2);
+        retImg = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+        Graphics2D bGr = retImg.createGraphics();
+        bGr.drawImage(img, 0, 0, null);
+        bGr.dispose();
+
+        return retImg;
+    }
+
+    private int sqr(int a){
+        return a*a;
+    }
+
+    public String printLoc(){
+        return Integer.toString(x)+", "+Integer.toString(y);
     }
 }
