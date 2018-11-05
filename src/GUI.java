@@ -18,6 +18,6 @@ public class GUI extends JFrame{
         frame.pack();
         frame.setVisible(true);
 
-        g.start();
+        g.initialize();
     }
 }
