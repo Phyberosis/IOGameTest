@@ -1,3 +1,6 @@
+import entities.Food;
+import entities.Player;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -35,40 +38,6 @@ public class Game extends JPanel implements Runnable, KeyListener{
             cursorLoc = "";
             plrLoc = "";
         }
-
-        for(int i = 0; i<40; i++) {
-            int choice = (int) Math.round(Math.random() * 3 + 1);
-            String src = "candy.png";
-            switch (choice) {
-                case 2:
-                    src = "broccoli.png";
-                    break;
-                case 3:
-                    src = "pizza.png";
-                    break;
-            }
-
-            int x, y;
-            while (true){
-                x = getRandInt(WIDTH);
-                y = getRandInt(HEIGHT);
-
-                boolean pass = true;
-                for(Food f : foods){
-                    if(f.inBounds(x, y, f.radius)){
-                        pass = false;
-                        break;
-                    }
-                }
-
-                if(pass){
-                    break;
-                }
-            }
-
-
-            foods.add(new Food(src, x, y));
-        }
     }
 
     public void initialize(){
@@ -81,18 +50,18 @@ public class Game extends JPanel implements Runnable, KeyListener{
         int mouseX = MouseInfo.getPointerInfo().getLocation().x;
         int mouseY = MouseInfo.getPointerInfo().getLocation().y;
 
-        player.update(dt, new Location(mouseX, mouseY));
+//        player.update(dt, new Location(mouseX, mouseY));
 
         for(Food f : foods){
-            if(f.eaten){
-                f.tryReset();
-                continue;
-            }
+//            if(f.eaten){
+//                f.tryReset();
+//                continue;
+//            }
 
-            int[] boundData = f.getBoundData();
+            int[] boundData = f.getBounds();
 
-            if(player.inBounds(boundData[0], boundData[1], boundData[2])){
-                f.eat();
+            if(player.isIntersect(boundData[0], boundData[1], boundData[2])){
+//                f.eat();
                 player.grow();
             }
         }
@@ -108,10 +77,10 @@ public class Game extends JPanel implements Runnable, KeyListener{
         g.setColor(Color.white);
 
         for(Food f : foods){
-            f.render(g);
+//            f.render(g);
         }
 
-        player.render(g);
+//        player.render(g);
 
 //        System.out.println(debug);
         if(debug){
