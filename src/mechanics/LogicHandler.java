@@ -20,7 +20,11 @@ public class LogicHandler implements Runnable {
     private EatGame parent;
 
     private long lastUpdate;
+    private long trueLastUpdate;
     private final long UPDATE_PERIOD = 16000000;
+    private final long SLOW_RATE = 1000000;
+    private long updatePeriod = UPDATE_PERIOD;
+
     private boolean isSlowing = false;
 
     public LogicHandler(LinkedList<MyEnt> ents, EatGame eg){
@@ -42,7 +46,23 @@ public class LogicHandler implements Runnable {
     }
 
     private void update(long now){
-        if(now - lastUpdate < UPDATE_PERIOD)
+
+        if(now - trueLastUpdate > UPDATE_PERIOD){
+            if(isSlowing){
+                updatePeriod += SLOW_RATE;
+                if(updatePeriod > UPDATE_PERIOD * 10)
+                    updatePeriod = UPDATE_PERIOD;
+            }else {
+                updatePeriod -= SLOW_RATE;
+                if(updatePeriod < UPDATE_PERIOD){
+                    updatePeriod = UPDATE_PERIOD;
+                }
+            }
+            System.out.println(updatePeriod);
+            trueLastUpdate = getCurrentTime();
+        }
+
+        if(now - lastUpdate < updatePeriod)
             return;
         lastUpdate = getCurrentTime();
 

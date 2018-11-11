@@ -137,12 +137,12 @@ public class EatGame extends Application {
         });
     }
 
-    public void slowGame(){
-
+    public void slowTime(){
+        logicHandler.slowTime();
     }
 
     public void resetTime(){
-
+        logicHandler.resetTime();
     }
 
     @Override

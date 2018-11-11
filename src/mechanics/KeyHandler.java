@@ -18,6 +18,13 @@ public class KeyHandler implements EventHandler<KeyEvent> {
         switch (event.getCode()){
             case R:
                 parent.changeScene(SceneIDs.GAME);
+                break;
+            case S:
+                parent.slowTime();
+                break;
+            case F:
+                parent.resetTime();
+                break;
         }
     }
 }
