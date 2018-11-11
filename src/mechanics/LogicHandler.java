@@ -22,7 +22,7 @@ public class LogicHandler implements Runnable {
     private long lastUpdate;
     private long trueLastUpdate;
     private final long UPDATE_PERIOD = 16000000;
-    private final long SLOW_RATE = 1000000;
+    private final long SLOW_RATE = 4000000;
     private long updatePeriod = UPDATE_PERIOD;
 
     private boolean isSlowing = false;
@@ -50,11 +50,11 @@ public class LogicHandler implements Runnable {
         if(now - trueLastUpdate > UPDATE_PERIOD){
             if(isSlowing){
                 updatePeriod += SLOW_RATE;
-                if(updatePeriod > UPDATE_PERIOD * 10)
-                    updatePeriod = UPDATE_PERIOD;
+                if(updatePeriod >= UPDATE_PERIOD * 30)
+                    updatePeriod = UPDATE_PERIOD * 30;
             }else {
                 updatePeriod -= SLOW_RATE;
-                if(updatePeriod < UPDATE_PERIOD){
+                if(updatePeriod <= UPDATE_PERIOD){
                     updatePeriod = UPDATE_PERIOD;
                 }
             }

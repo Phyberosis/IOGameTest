@@ -89,6 +89,7 @@ public class EatGame extends Application {
         ents.add(shark);
 
         currentScene.setOnMouseMoved(new MouseHandler(player));
+        currentScene.setOnKeyPressed(new KeyHandler(this));
 
         graphicsHandler.start();
         logicHandler.start();
