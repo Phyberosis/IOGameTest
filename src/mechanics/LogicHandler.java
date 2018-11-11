@@ -22,7 +22,7 @@ public class LogicHandler implements Runnable {
     private long lastUpdate;
     private long trueLastUpdate;
     private final long UPDATE_PERIOD = 16000000;
-    private final long SLOW_RATE = 4000000;
+    private final long SLOW_RATE = 8000000;
     private long updatePeriod = UPDATE_PERIOD;
 
     private boolean isSlowing = false;
@@ -58,7 +58,7 @@ public class LogicHandler implements Runnable {
                     updatePeriod = UPDATE_PERIOD;
                 }
             }
-            System.out.println(updatePeriod);
+//            System.out.println(updatePeriod);
             trueLastUpdate = getCurrentTime();
         }
 
@@ -71,7 +71,7 @@ public class LogicHandler implements Runnable {
         Shark shark = null;
 
         for(MyEnt e : ents){
-            e.update(now);
+            e.update();
             if(e.getType() == Entities.PLAYER)
                 player = (Player) e;
             else if(e.getType() == Entities.SHARK)

@@ -41,7 +41,7 @@ public abstract class MyEnt {
         return type;
     }
 
-    public abstract void update(long now);
+    public abstract void update();
 
     public abstract void collided(MyEnt ent, long now);
 

@@ -47,7 +47,7 @@ public class Food extends MyEnt{
         me = loadImage();
     }
 
-    public void tryReset(long now){
+    public void tryReset(){
 //        System.out.println(now - lastActionTime + ", " + actionDelay);
         if(framesTillGen == 0){
             generate();
@@ -61,9 +61,9 @@ public class Food extends MyEnt{
     }
 
     @Override
-    public void update(long now) {
+    public void update() {
         if(!active) {
-            tryReset(now);
+            tryReset();
         }
     }
 

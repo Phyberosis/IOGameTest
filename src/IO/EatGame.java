@@ -1,9 +1,6 @@
 package IO;
 
-import entities.Food;
-import entities.MyEnt;
-import entities.Player;
-import entities.Shark;
+import entities.*;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Group;
@@ -37,7 +34,7 @@ public class EatGame extends Application {
     private LogicHandler logicHandler;
 
     private LinkedList<MyEnt> ents;
-    private Player player;
+    private Player plr;
     private Shark shark;
 
     private Stage stage;
@@ -83,12 +80,12 @@ public class EatGame extends Application {
         logicHandler = new LogicHandler(ents, this);
 
         loadFoods();
-        player = new Player();
-        ents.add(player);
+        plr = new Player();
+        ents.add(plr);
         shark = new Shark(WIDTH);
         ents.add(shark);
 
-        currentScene.setOnMouseMoved(new MouseHandler(player));
+        currentScene.setOnMouseMoved(new MouseHandler(plr));
         currentScene.setOnKeyPressed(new KeyHandler(this));
 
         graphicsHandler.start();
@@ -129,7 +126,7 @@ public class EatGame extends Application {
                     break;
         }
 
-        Scene s = new EndMessageScreen(msg, col, WIDTH/2, HEIGHT/2, root);
+        Scene s = new EndMessageScreen(msg, col, WIDTH*2/3, HEIGHT*2/3, root);
 //        Scene s = sceneMap.get(newScene);
         Platform.runLater(() -> {
             currentScene = s;

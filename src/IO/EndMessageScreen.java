@@ -16,12 +16,12 @@ public class EndMessageScreen extends Scene {
         GraphicsContext g = c.getGraphicsContext2D();
         root.getChildren().add( c );
 
-        Font f = new Font(h/4);
+        Font f = new Font(h/6);
         g.setFont(f);
         g.setFill(color);
         g.fillText(msg,0, h*2/6);
         g.setFill(Color.BLACK);
-        f = new Font(h/8);
+        f = new Font(h/9);
         g.setFont(f);
         g.fillText("press R to reset", 0, h*6/7);
     }

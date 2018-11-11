@@ -1,5 +1,6 @@
 package entities;
 
+import IO.EatGame;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
@@ -11,12 +12,22 @@ public class Player extends MyEnt{
 
     private boolean eaten = false;
     public Player(){
-        super(60, "face.PNG", Entities.PLAYER);
+        super(1, "face.PNG", Entities.PLAYER);
         myPicture = loadImage();
         mouseLocation = new Location(0,0);
+        mouse = new Location(-radius, -radius);
 
         x = -radius;
         y = -radius;
+    }
+
+    void MakeMe(){
+        radius = 60;
+    }
+
+    void centerMe(){
+        x = EatGame.WIDTH/2;
+        y = EatGame.HEIGHT/2;
     }
 
     public void giveMouseLocation(int x, int y){
@@ -52,17 +63,16 @@ public class Player extends MyEnt{
     }
 
     @Override
-    public void update(long now) {
+    public void update() {
 //        System.out.println(now-lastActionTime + "/"+actionDelay);
+    }
+
+    void followMouse(){
+        mouse = mouseLocation;
         synchronized (this){
             x = move(x, mouse.x);
             y = move(y, mouse.y);
         }
-    }
-
-    void updateMouse(){
-        mouseLocation.x = mouse.x;
-        mouseLocation.y = mouse.y;
     }
 
     void eaten(){

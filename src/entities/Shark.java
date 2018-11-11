@@ -13,7 +13,7 @@ public class Shark extends MyEnt {
 //    float speed;
     int dx, dy;
 //    final float ACCEL = 5;
-    final float MAX_SPEED = 40;
+    final float MAX_SPEED = 25;
     int tackleRange;
     boolean isTackling = false;
     boolean isRepositioning = false;
@@ -71,10 +71,8 @@ public class Shark extends MyEnt {
     }
 
     @Override
-    public void update(long now) {
+    public void update() {
 //            System.out.println(now - lastActionTime);
-
-        long dt = 16000000; // this can be done better
 
         if(dormancy > 0){
             dormancy--;
@@ -106,8 +104,7 @@ public class Shark extends MyEnt {
         //stop tracking when tackling
         if(!isTackling){
             synchronized (this){
-//                    System.out.println("h");
-                int[] spd = getNewVector(dt, plrLoc.x, plrLoc.y);
+                int[] spd = getNewVector(plrLoc.x, plrLoc.y);
                 dx = spd[0];
                 dy = spd[1];
             }
@@ -151,14 +148,14 @@ public class Shark extends MyEnt {
         return a*a;
     }
 
-    private int[] getNewVector(float dt, int tx, int ty){
+    private int[] getNewVector(int tx, int ty){
 //        System.out.println(speed);
 
         double xDisp = tx - x;
         double yDisp = ty - y;
 
         double theta = Math.atan(yDisp/xDisp);
-        if(xDisp > 0){
+        if(xDisp >= 0){
             flip = true;
             double th = Math.PI - theta;
             imageView.setRotate(th*180/Math.PI + 45 + 180);
