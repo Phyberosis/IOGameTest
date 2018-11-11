@@ -4,14 +4,19 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public class Player extends MyEnt{
-    Image me;
+    Image myPicture;
 
     private Location mouseLocation;
+    Location mouse;
+
     private boolean eaten = false;
     public Player(){
         super(60, "face.PNG", Entities.PLAYER);
-        me = loadImage();
+        myPicture = loadImage();
         mouseLocation = new Location(0,0);
+
+        x = -radius;
+        y = -radius;
     }
 
     public void giveMouseLocation(int x, int y){
@@ -34,14 +39,14 @@ public class Player extends MyEnt{
     public void grow(){
         radius+=6;
         synchronized (this){
-            me = loadImage();
+            myPicture = loadImage();
         }
     }
 
     public void render(GraphicsContext g){
         synchronized (this){
 //            System.out.println("player render");
-            drawPicture(g, me);
+            drawPicture(g, myPicture);
 //            drawCircle(g);
         }
     }
@@ -50,9 +55,14 @@ public class Player extends MyEnt{
     public void update(long now) {
 //        System.out.println(now-lastActionTime + "/"+actionDelay);
         synchronized (this){
-            x = move(x, mouseLocation.x);
-            y = move(y, mouseLocation.y);
+            x = move(x, mouse.x);
+            y = move(y, mouse.y);
         }
+    }
+
+    void updateMouse(){
+        mouseLocation.x = mouse.x;
+        mouseLocation.y = mouse.y;
     }
 
     void eaten(){
