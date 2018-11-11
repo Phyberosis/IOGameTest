@@ -10,8 +10,8 @@ public abstract class MyEnt {
     int radius;
 
     //60ups
-    long actionDelay = 16000000;
-    long lastActionTime;
+//    long actionDelay = 16000000;
+//    long lastActionTime;
 
     String imageSrc;
     Entities type;
@@ -36,6 +36,7 @@ public abstract class MyEnt {
             active = act;
         }
     }
+
     public Entities getType() {
         return type;
     }

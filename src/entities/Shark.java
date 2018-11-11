@@ -20,7 +20,7 @@ public class Shark extends MyEnt {
 
     final int MAX_REPO_TICKS = 45;
     int repositioningTicks = 0;
-    private long dormancy = 1000000000L *5L;
+    private long dormancy = 300;
 
     boolean eaten = false;
 
@@ -72,56 +72,53 @@ public class Shark extends MyEnt {
 
     @Override
     public void update(long now) {
-        if(now - lastActionTime > actionDelay) {
 //            System.out.println(now - lastActionTime);
 
-            long dt = now - lastActionTime;
-            lastActionTime = now;
+        long dt = 16000000; // this can be done better
 
-            if(dormancy > 0 && dt < 1000000000L){
-                dormancy-=dt;
-                return;
-            }
+        if(dormancy > 0){
+            dormancy--;
+            return;
+        }
 
-            int sqrRange = getSqrRange(plrLoc);
-            int sqrMax = sqr(tackleRange);
+        int sqrRange = getSqrRange(plrLoc);
+        int sqrMax = sqr(tackleRange);
 
-            //initialize tackle when in range and only stop when off screen
-            if(sqrRange < sqrMax){
-                isTackling = true;
+        //initialize tackle when in range and only stop when off screen
+        if(sqrRange < sqrMax){
+            isTackling = true;
 //                speed = MAX_SPEED;
-            }
-            else if(isTackling && sqrRange > sqrMax){
+        }
+        else if(isTackling && sqrRange > sqrMax){
 //                System.out.println("here");
-                isTackling = false;
-                isRepositioning = true;
-                repositioningTicks = 0;
+            isTackling = false;
+            isRepositioning = true;
+            repositioningTicks = 0;
 //                speed = 0;
-            }else if(isRepositioning){
-                repositioningTicks++;
-                if(repositioningTicks > MAX_REPO_TICKS)
-                    isRepositioning = false;
+        }else if(isRepositioning){
+            repositioningTicks++;
+            if(repositioningTicks > MAX_REPO_TICKS)
+                isRepositioning = false;
 
-            }
+        }
 //            System.out.println(sqrRange+", "+sqrMax);
 
-            //stop tracking when tackling
-            if(!isTackling){
-                synchronized (this){
+        //stop tracking when tackling
+        if(!isTackling){
+            synchronized (this){
 //                    System.out.println("h");
-                    int[] spd = getNewVector(dt, plrLoc.x, plrLoc.y);
-                    dx = spd[0];
-                    dy = spd[1];
-                }
+                int[] spd = getNewVector(dt, plrLoc.x, plrLoc.y);
+                dx = spd[0];
+                dy = spd[1];
             }
+        }
 
 //            System.out.println(dx+", "+dy);
 //            System.out.println(x+", "+y);
 //            System.out.println(plrLoc.x+", "+plrLoc.y);
-            //always need to move
-            x += dx;
-            y += dy;
-        }
+        //always need to move
+        x += dx;
+        y += dy;
     }
 
     @Override

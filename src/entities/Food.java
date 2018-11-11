@@ -7,15 +7,16 @@ import IO.EatGame;
 public class Food extends MyEnt{
 
     private Image me;
-
+    private int downFrames;
+    private int framesTillGen;
     public Food(String imgSrc) {
         super(30, imgSrc, Entities.FOOD);
 
         generate();
 
-        final double avgDuration = 1500000000.0;
-        final double deviation = 100000000.0;
-        actionDelay = Math.round((Math.random()*deviation) + avgDuration);
+        final double avgDuration = 120;
+        final double deviation = 30;
+        downFrames = (int) Math.round((Math.random()*deviation) + avgDuration);
 
         me = loadImage();
     }
@@ -23,7 +24,7 @@ public class Food extends MyEnt{
     public void eat(long now){
 //        System.out.println(now);
         active = false;
-        lastActionTime = now;
+        framesTillGen = downFrames;
     }
 
     private void generate(){
@@ -48,8 +49,10 @@ public class Food extends MyEnt{
 
     public void tryReset(long now){
 //        System.out.println(now - lastActionTime + ", " + actionDelay);
-        if(now - lastActionTime > actionDelay){
+        if(framesTillGen == 0){
             generate();
+        }else{
+            framesTillGen--;
         }
     }
 

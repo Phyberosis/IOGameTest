@@ -108,12 +108,12 @@ public class EatGame extends Application {
 
         switch (newScene){
             case WIN:
-                msg = "You Win!";
+                msg = "You ate the shark!\nYou Win!";
                 col = Color.GREEN;
                 stopHandlers();
                 break;
             case LOSE:
-                msg = "Try Again!";
+                msg = "You got eaten!\nTry Again!";
                 col = Color.RED;
                 stopHandlers();
                 break;
@@ -135,6 +135,14 @@ public class EatGame extends Application {
             stage.setScene(s);
             s.setOnKeyPressed(new KeyHandler(this));
         });
+    }
+
+    public void slowGame(){
+
+    }
+
+    public void resetTime(){
+
     }
 
     @Override

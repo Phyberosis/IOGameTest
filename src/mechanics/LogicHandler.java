@@ -19,6 +19,10 @@ public class LogicHandler implements Runnable {
 
     private EatGame parent;
 
+    private long lastUpdate;
+    private final long UPDATE_PERIOD = 16000000;
+    private boolean isSlowing = false;
+
     public LogicHandler(LinkedList<MyEnt> ents, EatGame eg){
         physicsHandler = new PhysicsHandler();
         this.ents = ents;
@@ -29,6 +33,8 @@ public class LogicHandler implements Runnable {
         running = true;
         thread = new Thread(this);
         thread.start();
+
+        lastUpdate = getCurrentTime();
     }
 
     private long getCurrentTime(){
@@ -36,6 +42,10 @@ public class LogicHandler implements Runnable {
     }
 
     private void update(long now){
+        if(now - lastUpdate < UPDATE_PERIOD)
+            return;
+        lastUpdate = getCurrentTime();
+
         physicsHandler.checkCollisions(ents, now);
         Player player = null;
         Shark shark = null;
@@ -60,6 +70,14 @@ public class LogicHandler implements Runnable {
         }else{
             System.out.println("no shark/player");
         }
+    }
+
+    public void slowTime(){
+        isSlowing = true;
+    }
+
+    public void resetTime(){
+        isSlowing = false;
     }
 
     @Override

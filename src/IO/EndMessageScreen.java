@@ -19,10 +19,10 @@ public class EndMessageScreen extends Scene {
         Font f = new Font(h/4);
         g.setFont(f);
         g.setFill(color);
-        g.fillText(msg,0, h*3/5);
+        g.fillText(msg,0, h*2/6);
         g.setFill(Color.BLACK);
         f = new Font(h/8);
         g.setFont(f);
-        g.fillText("press R to reset", 0, h*4/5);
+        g.fillText("press R to reset", 0, h*6/7);
     }
 }

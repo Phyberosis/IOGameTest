@@ -49,12 +49,9 @@ public class Player extends MyEnt{
     @Override
     public void update(long now) {
 //        System.out.println(now-lastActionTime + "/"+actionDelay);
-        if(now-lastActionTime > actionDelay) {
-            lastActionTime = now;
-            synchronized (this){
-                x = move(x, mouseLocation.x);
-                y = move(y, mouseLocation.y);
-            }
+        synchronized (this){
+            x = move(x, mouseLocation.x);
+            y = move(y, mouseLocation.y);
         }
     }
 
