@@ -72,6 +72,10 @@ public abstract class MyEnt {
         return new Image(imageSrc, radius*2, radius*2, false, false);
     }
 
+    Image loadImagePlr(){
+        return new Image(imageSrc, radius*2.2, radius*2, false, false);
+    }
+
 //    Image scale(int r){
 //        return new Image(imageSrc, r, r, false, false);
 //    }

@@ -13,7 +13,7 @@ public class Player extends MyEnt{
     private boolean eaten = false;
     public Player(){
         super(1, "face.PNG", Entities.PLAYER);
-        myPicture = loadImage();
+        myPicture = loadImagePlr();
         mouseLocation = new Location(0,0);
         mouse = new Location(-radius, -radius);
 
@@ -21,8 +21,9 @@ public class Player extends MyEnt{
         y = -radius;
     }
 
-    void MakeMe(){
+    void makeMe(){
         radius = 60;
+        myPicture = loadImagePlr();
     }
 
     void centerMe(){
